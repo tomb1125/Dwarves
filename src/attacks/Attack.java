@@ -9,6 +9,7 @@ import javax.script.ScriptException;
 import evo.Dwarf;
 import evo.LiveDwarf;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import talents.ClanTalent;
 
 public class Attack implements Cloneable {
 	public String name;
@@ -73,8 +74,16 @@ public class Attack implements Cloneable {
 			power+= hitChance*STUN_VALUE;
 		}
 		
+		if(action == AttackAction.ACTION) {
+			d.IncreaseStat("attacks_made");
+		}
+		
 		if(d.stats.containsKey("bonus_damage")) {
 			power+= Double.valueOf(d.stats.get("bonus_damage"));
+		}
+		
+		if(d.clanTalent == ClanTalent.DARK_DWARF_COMBO && Integer.valueOf(d.stats.get("attacks_made"))+1 % 3 == 0) {
+			power = power*2;
 		}
 		
 		d.nextTurn();

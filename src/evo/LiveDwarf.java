@@ -19,6 +19,7 @@ public class LiveDwarf extends Dwarf {
 		this.generalTalent1 = d.generalTalent1;
 		this.generalTalent2 = d.generalTalent2;
 		this.generalTalent3 = d.generalTalent3;
+		this.generalTalent4 = d.generalTalent4;
 		
 		this.attacks = new LinkedList<Attack>();
 		this.mods = new LinkedList<Attack>();

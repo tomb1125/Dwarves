@@ -12,6 +12,7 @@ import talents.ClanTalent;
 import talents.GeneralTier1;
 import talents.GeneralTier2;
 import talents.GeneralTier3;
+import talents.GeneralTier4;
 import talents.GuildTalent;
 
 public class Dwarf implements Cloneable {
@@ -26,11 +27,12 @@ public class Dwarf implements Cloneable {
 	}
 	
 	public String name;
-	ClanTalent clanTalent;
-	GuildTalent guildTalent;
-	GeneralTier1 generalTalent1;
-	GeneralTier2 generalTalent2;
-	GeneralTier3 generalTalent3;
+	public ClanTalent clanTalent;
+	public GuildTalent guildTalent;
+	public GeneralTier1 generalTalent1;
+	public GeneralTier2 generalTalent2;
+	public GeneralTier3 generalTalent3;
+	public GeneralTier4 generalTalent4;
 	public List<Attack> attacks;
 	public List<Attack> mods;
 	public List<Strategy> strategy;
@@ -61,6 +63,10 @@ public class Dwarf implements Cloneable {
 	
 	private void loadTalent(GeneralTier3 x) {
 		this.generalTalent3 = x;
+	}
+	
+	private void loadTalent(GeneralTier4 x) {
+		this.generalTalent4 = x;
 	}
 	
 	@Override
