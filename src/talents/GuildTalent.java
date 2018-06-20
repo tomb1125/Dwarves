@@ -1,5 +1,5 @@
 package talents;
 
-public class GuildTalent extends Talent {
+public enum GuildTalent {
 
 }

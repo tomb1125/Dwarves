@@ -8,9 +8,11 @@ import attacks.Attack;
 import attacks.AttackAction;
 import attacks.AttackType;
 import talents.ClanTalent;
-import talents.GeneralTalent;
+import talents.ClanTalent;
+import talents.GeneralTier1;
+import talents.GeneralTier2;
+import talents.GeneralTier3;
 import talents.GuildTalent;
-import talents.Talent;
 
 public class Dwarf implements Cloneable {
 	public final Integer DEPTH = 4;
@@ -26,9 +28,9 @@ public class Dwarf implements Cloneable {
 	public String name;
 	ClanTalent clanTalent;
 	GuildTalent guildTalent;
-	GeneralTalent generalTalent1;
-	GeneralTalent generalTalent2;
-	GeneralTalent generalTalent3;
+	GeneralTier1 generalTalent1;
+	GeneralTier2 generalTalent2;
+	GeneralTier3 generalTalent3;
 	public List<Attack> attacks;
 	public List<Attack> mods;
 	public List<Strategy> strategy;
@@ -49,14 +51,16 @@ public class Dwarf implements Cloneable {
 		this.guildTalent = x;
 	}
 	
-	private void loadTalent(GeneralTalent x, Integer num) {
-		if(num == 1) {
-			this.generalTalent1 = x;
-		} else if(num == 2) {
-			this.generalTalent2 = x;
-		} else if(num == 3) {
-			this.generalTalent3 = x;
-		}
+	private void loadTalent(GeneralTier1 x) {
+		this.generalTalent1 = x;
+	}
+
+	private void loadTalent(GeneralTier2 x) {
+		this.generalTalent2 = x;
+	}
+	
+	private void loadTalent(GeneralTier3 x) {
+		this.generalTalent3 = x;
 	}
 	
 	@Override
@@ -144,25 +148,6 @@ public class Dwarf implements Cloneable {
 		for(Integer t=0; t<=maxTurn; t++) {
 			this.strategy.add(t,this.getBestStrategyForTurn(t, DEPTH));
 		}
-	}
-	
-	public Boolean hasTalent(Talent x) {
-		if(clanTalent == x) {
-			return true;
-		}
-		if(guildTalent == x) {
-			return true;
-		}
-		if(generalTalent1 == x) {
-			return true;
-		}
-		if(generalTalent2 == x) {
-			return true;
-		}
-		if(generalTalent3 == x) {
-			return true;
-		}
-		return false;
 	}
 	
 }

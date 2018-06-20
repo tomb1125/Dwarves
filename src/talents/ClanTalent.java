@@ -1,5 +1,5 @@
 package talents;
 
-public class ClanTalent extends Talent {
-
+public enum ClanTalent {
+	DARK_DWARF_COMBO
 }

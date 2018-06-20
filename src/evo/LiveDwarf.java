@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import attacks.Attack;
-import talents.ClanTalent;
-import talents.GeneralTalent;
-import talents.GuildTalent;
 
 
 public class LiveDwarf extends Dwarf {
