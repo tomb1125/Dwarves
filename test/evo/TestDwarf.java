@@ -25,20 +25,21 @@ public class TestDwarf {
 	  Attack attack3 = new Attack();
 	  
 	  attack1.name = "setup";
-	  attack1.statusOnHit = "map.setup = 1;";
+	  attack1.statusOnHit = "map.setup = 1; map.dmg = 2;";
 	  
 	  attack2.name = "finisher";
-	  attack2.statusOnHit = "if(map.setup == '1') map.bonus_damage = 3; delete map.setup;";
+	  attack2.statusOnHit = "if(map.setup == '1') map.bonus_damage = 6; map.dmg = 2; delete map.setup;";
 	  
-	  attack3.name = "strong";
-	  attack3.dps = 1.5;
+	  attack3.name = "strong" ;
+	  attack3.statusOnHit = "map.dmg = 3;";
+
 	  
 	  Dwarf d = new Dwarf();
 	  d.attacks.add(attack1);
 	  d.attacks.add(attack2);
 	  d.attacks.add(attack3);
 	  
-	  assertEquals(true, 0 == d.getBestStrategyForTurn(0, 4).usedAttack);
+	  assertEquals("setup", d.attacks.get(d.getBestStrategyForTurn(0, 4).usedAttack).name);
   }
   
   @Test
@@ -49,13 +50,13 @@ public class TestDwarf {
 	  Attack attack3 = new Attack();
 	  
 	  attack1.name = "setup";
-	  attack1.statusOnHit = "map.setup = 1;";
+	  attack1.statusOnHit = "map.setup = 1; map.dmg = 2;";
 	  
 	  attack2.name = "finisher";
-	  attack2.statusOnHit = "if(map.setup == '1') map.bonus_damage = 3; delete map.setup;";
+	  attack2.statusOnHit = "if(map.setup == '1') map.bonus_damage = 6; map.dmg = 2; delete map.setup;";
 	  
-	  attack3.name = "strong";
-	  attack3.dps = 1.5;
+	  attack3.name = "strong" ;
+	  attack3.statusOnHit = "map.dmg = 3;";
 	  
 	  Dwarf d = new Dwarf();
 	  d.attacks.add(attack1);
@@ -64,9 +65,9 @@ public class TestDwarf {
 	  
 	  d.fillStrategy(4);
 
-	  assertEquals(true, 0 == d.strategy.get(0).usedAttack);
-	  assertEquals(true, 1 == d.strategy.get(1).usedAttack);
-	  assertEquals(true, 0 == d.strategy.get(2).usedAttack);
-	  assertEquals(true, 1 == d.strategy.get(3).usedAttack);
+	  assertEquals("setup", d.attacks.get(d.strategy.get(0).usedAttack).name);
+	  assertEquals("finisher", d.attacks.get(d.strategy.get(1).usedAttack).name);
+	  assertEquals("setup", d.attacks.get(d.strategy.get(2).usedAttack).name);
+	  assertEquals("finisher", d.attacks.get(d.strategy.get(3).usedAttack).name);
   }
 }

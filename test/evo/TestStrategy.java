@@ -117,7 +117,7 @@ public class TestStrategy {
 			  if(numberOfStrategies > 100) break;
 		  }
 		  
-		  assertEquals(true, numberOfStrategies == 4*16);
+		  assertEquals(Integer.valueOf(5*16), numberOfStrategies);
 	  }	
 	  
 	  @Test 
@@ -151,7 +151,7 @@ public class TestStrategy {
 	 		}
 
 	      System.out.println(i);
-		  assertEquals(true, i == 16);
+		  assertEquals(Integer.valueOf(81), i);
 	 	  
 	  }	  
 }

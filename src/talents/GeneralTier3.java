@@ -1,5 +1,5 @@
 package talents;
 
 public enum GeneralTier3 {
-	HIP_SHOT
+	OPENING_SHOT //Ranged attack that increases next melee attack.
 }

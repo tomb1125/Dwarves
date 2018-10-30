@@ -1,6 +1,7 @@
 package evo;
 
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class Dwarf implements Cloneable {
 	static {
 		BASIC_ATTACK = new Attack();
 		BASIC_ATTACK.name = "Basic Attack";
-		BASIC_ATTACK.dps = 3;
-		BASIC_ATTACK.hitChance = 0.5;
+		//BASIC_ATTACK.dps = 3;
+		//BASIC_ATTACK.hitChance = 0.5;
 	}
 	
 	public String name;
@@ -55,6 +56,10 @@ public class Dwarf implements Cloneable {
 	
 	private void loadTalent(GeneralTier1 x) {
 		this.generalTalent1 = x;
+		
+		if(x == GeneralTier1.FORWARD_SMASH) {
+			
+		}
 	}
 
 	private void loadTalent(GeneralTier2 x) {
@@ -112,10 +117,7 @@ public class Dwarf implements Cloneable {
 				bestStratField = new LinkedList<Strategy>();
 				for(Strategy str : strategyField) {
 					bestStratField.add(str.clone());
-					//System.out.print(str.usedAttack+" ");
-				}
-				//System.out.println("");
-				
+				}				
 				
 				maxPower = power;
 			}
@@ -126,8 +128,9 @@ public class Dwarf implements Cloneable {
 		
 
 		for(Strategy str : bestStratField) {
-			System.out.print(str.usedAttack+" ");
+			System.out.print(this.attacks.get(str.usedAttack).name+" ");
 		}
+		System.out.print(" max power "+maxPower);
 		System.out.println("");
 
 		

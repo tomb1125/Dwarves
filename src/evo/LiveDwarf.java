@@ -7,10 +7,9 @@ import attacks.Attack;
 
 
 public class LiveDwarf extends Dwarf {
-	public HashMap<String, String> stats;
+	public HashMap<String, Integer> stats;
 
 	public LiveDwarf(Dwarf d) {
-		//DOTO we do not handle strategy yet.
 		this();
 		
 		this.name = d.name;
@@ -37,36 +36,23 @@ public class LiveDwarf extends Dwarf {
 			this.strategy.add(strat);
 		}
 		
-		stats.put("turn", "1");
+		stats.put("turn", 1);
 	}	
 	
 	public LiveDwarf() {
 		super();
-		stats = new HashMap<String, String>();
-	}
-	
-	public Attack chooseAttack() throws CloneNotSupportedException {
-		Attack chosenAttack = null;
-		double maxPower = Integer.MIN_VALUE;
-		for(Attack a : attacks) {
-			double power = a.getRelativePower(this);
-			if(power >= maxPower) {
-				maxPower = power;
-				chosenAttack = a;
-			}
-		}
-		
-		return chosenAttack;
+		stats = new HashMap<String, Integer>();
 	}
 	
 	@Override
 	public LiveDwarf clone() throws CloneNotSupportedException {
 		LiveDwarf clone = (LiveDwarf) super.clone();
-		clone.stats = new HashMap<String, String>(this.stats);
+		clone.stats = new HashMap<String, Integer>(this.stats);
 		clone.attacks = new LinkedList<Attack>();
 		
 		for(Attack att : this.attacks) {
-			clone.attacks.add(att.clone());
+			Attack clonedAttack = att.clone();
+			clone.attacks.add(clonedAttack);
 		}
 		
 		for(Attack mod : this.mods) {
@@ -77,7 +63,7 @@ public class LiveDwarf extends Dwarf {
 	}
 	
 	public String getStatusMapForEngine(String codeToEmbedd, Boolean noFooter) {
-		HashMap<String, String> tempStats = stats;
+		HashMap<String, Integer> tempStats = stats;
 		String jsExperssion;
 		String statsHeader = "var map = new Object();\r\n";
 		for(String key : tempStats.keySet()) {
@@ -98,9 +84,9 @@ public class LiveDwarf extends Dwarf {
 		LiveDwarf d = this.clone();
 		
 		if(d.stats.get("turn") == null) {
-			d.stats.put("turn", "1");
+			d.stats.put("turn", 1);
 		} else {
-			d.stats.put("turn", String.valueOf(Integer.valueOf(d.stats.get("turn"))+1));
+			d.stats.put("turn", d.stats.get("turn")+1);
 		}
 		
 		LowerStat("stun");
@@ -112,15 +98,31 @@ public class LiveDwarf extends Dwarf {
 	public void LowerStat(String stat) {
 		if(!stats.containsKey(stat)) return;
 		
-		if(stats.get(stat) == "1" || stats.get(stat) == "0") {
+		if(stats.get(stat) == 1 || stats.get(stat) == 0) {
 			stats.remove(stat);
 		} else {
-			stats.put(stat, String.valueOf(Integer.valueOf(stats.get(stat))-1));
+			stats.put(stat, stats.get(stat)-1);
 		}
 	}
 	
 	public void IncreaseStat(String stat) {
-		if(!stats.containsKey(stat)) stats.put(stat, "1");
-		stats.put(stat, String.valueOf(Integer.valueOf(stats.get(stat))+1));
+		if(!stats.containsKey(stat)) stats.put(stat, 1);
+		stats.put(stat, stats.get(stat)+1);
+	}
+	
+	public Integer fullfillsConditions() {
+		Integer binaryCount = 0;
+		
+		for(Attack a : attacks) {
+			for(String cond : a.conditions) {
+				
+				binaryCount*=2;
+				if(stats.containsKey(cond) && stats.get(cond) > 0) {
+					binaryCount+=1;
+				}
+			}
+		}
+		
+		return binaryCount;
 	}
 }
